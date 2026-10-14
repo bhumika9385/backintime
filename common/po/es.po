@@ -16,10 +16,10 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
-"PO-Revision-Date: 2026-08-10 08:19+0000\n"
+"POT-Creation-Date: 2026-09-19 19:19+0200\n"
+"PO-Revision-Date: 2026-08-31 08:25+0000\n"
 "Last-Translator: gallegonovato <gallegonovato@noreply.codeberg.org>\n"
 "Language-Team: Spanish <https://translate.codeberg.org/projects/backintime/common/es/>\n"
 "Language: es\n"
@@ -127,12 +127,12 @@ msgstr "Clave privada SSH"
 msgid "SSH (encrypted)"
 msgstr "SSH (Cifrado)"
 
-#: common/config.py:1880
+#: common/config.py:1881
 #, python-brace-format
 msgid "Udev scheduling is not supported with mode \"{mode}\"."
 msgstr "El modo \"{mode}\" no es compatible con la programación de Udev."
 
-#: common/config.py:1907
+#: common/config.py:1908
 msgid ""
 "Authentication timed out. The setup of Udev-based scheduling was not "
 "completed. Please try again."
@@ -140,11 +140,11 @@ msgstr ""
 "Tiempo de autenticación agotado. Error al configurar la programación basada "
 "en udev. Por favor, reinténtelo."
 
-#: common/config.py:1945
+#: common/config.py:1946
 msgid "Failed to write new crontab."
 msgstr "Error al escribir nuevo crontab."
 
-#: common/config.py:1954
+#: common/config.py:1955
 msgid ""
 "Cron is not running, even though the crontab command is available. Scheduled"
 " backup jobs will not run. Cron might be installed but not enabled. Try "
@@ -230,6 +230,18 @@ msgstr "Sin configurar el directorio de copia de seguridad."
 msgid "Could not mount the remote backup location."
 msgstr "No se pudo crear la ubicación para la copia de seguridad remota."
 
+#: common/mount/_backends.py:443
+msgid "Mountpoint is not usable."
+msgstr ""
+
+#: common/mount/_backends.py:445
+msgid "Failed operation:"
+msgstr ""
+
+#: common/mount/_backends.py:447 common/mount/_encryptors.py:341
+msgid "Error:"
+msgstr "Error:"
+
 #: common/mount/_encryptors.py:188
 msgid ""
 "Cannot initialize encryption because the backup destination is not empty."
@@ -272,10 +284,6 @@ msgstr ""
 #, python-brace-format
 msgid "Mount failed with return code {rc}."
 msgstr "El ensable falló con el código {rc}."
-
-#: common/mount/_encryptors.py:341
-msgid "Error:"
-msgstr "Error:"
 
 #: common/mount/_encryptors.py:343 qt/snapshotsdialog.py:70
 msgid "Command:"
@@ -436,21 +444,21 @@ msgstr "No se puede renombrar {new_path} a {path}."
 msgid "Applying rules to remove old backups"
 msgstr "Aplicando reglas para eliminar copias de seguridad antiguas"
 
-#: common/snapshots.py:2090
+#: common/snapshots.py:2092
 msgid "Applying retention policy"
 msgstr ""
 "Aplicando las reglas automatizadas para el almacenamiento y conservación"
 
-#: common/snapshots.py:2100
+#: common/snapshots.py:2102
 msgid "Trying to keep min free space"
 msgstr "Tratando de dejar libre el espacio de almacenamiento mínimo requerido"
 
-#: common/snapshots.py:2143
+#: common/snapshots.py:2145
 #, python-brace-format
 msgid "Trying to keep min {perc} free inodes"
 msgstr "Intentando mantener un mínimo de {perc} Inodes libres"
 
-#: common/snapshots.py:3374 qt/app.py:1563 qt/timeline.py:405
+#: common/snapshots.py:3376 qt/app.py:1563 qt/timeline.py:405
 msgid "Now"
 msgstr "Ahora"
 
@@ -547,24 +555,23 @@ msgstr "El permiso de escritura puede estar restringido."
 
 #: common/tools.py:411
 msgid "Not enough free space on the device."
-msgstr ""
+msgstr "Sin espacio libre suficiente en el dispositivo."
 
 #: common/tools.py:415
 msgid "Not enough free space because the disk quota has been exceeded."
-msgstr ""
+msgstr "Espacio insuficiente: cuota de disco excedida."
 
 #: common/tools.py:419
 msgid "Filesystem is read-only."
-msgstr ""
+msgstr "Error: Sistema de archivos de solo lectura."
 
 #: common/tools.py:422
 msgid "Unexpected error: "
-msgstr ""
+msgstr "Error no previsto: "
 
 #: common/tools.py:425
-#, fuzzy
 msgid "Creation failed:"
-msgstr "La autenticación SSH falló para:"
+msgstr "Error al crear:"
 
 #: common/tools.py:460
 #, python-brace-format
@@ -2442,19 +2449,19 @@ msgstr ""
 "seguridad que se activan al conectar dispositivos de almacenamiento "
 "externos."
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "Atajos"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "Ubicaciones"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "Sistema de archivos"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "Directorios de copia de seguridad"
 

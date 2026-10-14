@@ -21,7 +21,7 @@ import signal
 import textwrap
 import functools
 from pathlib import Path
-from argparse import ArgumentParser
+from argparse import ArgumentParser, SUPPRESS
 from typing import Callable
 if not os.getenv('DISPLAY', '') and not os.getenv('WAYLAND_DISPLAY', ''):
     os.putenv('DISPLAY', ':0.0')
@@ -512,6 +512,12 @@ if __name__ == '__main__':
         metavar='PATH',
         type=Path,
         action='store'
+    )
+    argparser.add_argument(
+        '--keep-alive',
+        action='store_true',
+        default=False,
+        help=SUPPRESS
     )
 
     args = argparser.parse_args()

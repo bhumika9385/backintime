@@ -1937,7 +1937,8 @@ class Snapshots:
         # Remove snapshots older than N years/weeks/days
         if self.config.removeOldSnapshotsEnabled():
             self.setTakeSnapshotMessage(
-                0, _('Applying rules to remove old backups'))
+                0, _('Applying rules to remove old backups')
+            )
 
             # The oldest backup to keep. Others older than this are removed.
             oldSID = SID(
@@ -1947,7 +1948,7 @@ class Snapshots:
             )
             oldBackupId = oldSID.withoutTag
 
-            logger.debug(f'Removing backups older than: {oldBackupId}', self)
+            logger.info(f'Removing backups older than: {oldBackupId}', self)
 
             while True:
                 # Keep min one backup
@@ -1965,7 +1966,8 @@ class Snapshots:
 
                 msg = 'Removing backup {} because it is older than {}'
                 logger.debug(msg.format(
-                    snapshots[0].withoutTag, oldBackupId), self)
+                    snapshots[0].withoutTag, oldBackupId
+                ), self)
 
                 self.remove(snapshots[0])
                 del snapshots[0]
