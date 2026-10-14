@@ -1185,6 +1185,32 @@ class Snapshots:
 
         return hints.get(exit_code, _("See 'man rsync' for more details"))
 
+    # Ending of the rsync error line if it lacks read permission
+    RSYNC_PERMISSION_DENIED = 'Permission denied (13)'
+
+    def _warn_unreadable_includes(self, include_folders) -> list:
+        """Warn about included paths which can not be read (#2571).
+
+        Args:
+            include_folders (list): tuples (path, type) as in
+                :py:func:`takeSnapshot`.
+
+        Returns:
+            list: The unreadable paths.
+        """
+        unreadable = []
+
+        for path, _type in include_folders:
+            if os.path.exists(path) and not os.access(path, os.R_OK):
+                unreadable.append(path)
+                msg = _('Back In Time has no permission to read {path}. '
+                        'Exclude it from the backup or fix its '
+                        'permissions.').format(path=path)
+                logger.warning(msg, self)
+                self.snapshotLog.append('[I] ' + msg, 3)
+
+        return unreadable
+
     def rsyncCallback(self, line, params):
         """
         Parse rsync's stdout, send it to takeSnapshotMessage and
@@ -1217,6 +1243,15 @@ class Snapshots:
                     # rsync: [generator] link [...] failed: Invalid cross-device link (18)
                     params[0] = True
                     self.setTakeSnapshotMessage(1, 'Error: ' + line)
+
+                    # Explain the most common cause in plain words (#2571)
+                    if line.endswith(self.RSYNC_PERMISSION_DENIED):
+                        match = re.search(r'"([^"]+)"', line)
+                        path = match.group(1) if match else '?'
+                        self.setTakeSnapshotMessage(1, _(
+                            'Back In Time has no permission to read '
+                            '{path}. Exclude it from the backup or fix its '
+                            'permissions.').format(path=path))
 
         if len(line) >= 13:
             # The prefix is created by rsync via the argument "--out-format=BACKINTIME: %i %n%L"
@@ -1497,6 +1532,8 @@ class Snapshots:
             rsync_prefix.append('--max-size=%sM' % self.config.excludeBySize())
 
         rsync_suffix = self.rsyncSuffix(include_folders)
+
+        self._warn_unreadable_includes(include_folders)
 
         # When there is no snapshots it takes the last snapshot from the other folders
         # It should delete the excluded folders then
