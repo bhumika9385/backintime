@@ -86,22 +86,22 @@ class TerminalSize(unittest.TestCase):
     @unittest.skipIf(fcntl is None, 'POSIX only')
     def test_real_pseudo_terminal(self):
         """A real (pseudo) terminal of size 24 x 132 and one with size 0."""
-        master, slave = pty.openpty()
-        self.addCleanup(os.close, master)
-        self.addCleanup(os.close, slave)
+        pty_main, pty_tty = pty.openpty()
+        self.addCleanup(os.close, pty_main)
+        self.addCleanup(os.close, pty_tty)
 
         class FakeStdout:
             @staticmethod
             def fileno():
-                return slave
+                return pty_tty
 
         with _without_size_env(), \
                 mock.patch.object(sys, '__stdout__', FakeStdout()):
-            fcntl.ioctl(slave, termios.TIOCSWINSZ,
+            fcntl.ioctl(pty_tty, termios.TIOCSWINSZ,
                         struct.pack('hhhh', 24, 132, 0, 0))
             self.assertEqual(cli.terminalSize(), [24, 132])
 
-            fcntl.ioctl(slave, termios.TIOCSWINSZ,
+            fcntl.ioctl(pty_tty, termios.TIOCSWINSZ,
                         struct.pack('hhhh', 0, 0, 0, 0))
             self.assertEqual(cli.terminalSize(), [24, 80])
 
